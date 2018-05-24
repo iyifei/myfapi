@@ -5,7 +5,7 @@
  * Date: 2018/5/24
  */
 //定义项目名称
-define('APP_NAME','app');
+define('APP_NAME','App');
 //定项目路径
 define('APP_PATH',__DIR__);
 //系统路径
