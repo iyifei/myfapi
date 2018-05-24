@@ -11,9 +11,9 @@
   },
   "autoload":{
     "psr-4":{
-      "App\\":"app",
+      "App\\":"App",
       "Tests\\":"tests",
-      "Common\\":"common"
+      "Common\\":"Common"
     },
     "files": [
       "bootstrap/functions.php",
