@@ -1,5 +1,6 @@
 <?php
 namespace Common\Libs;
+use Common\Exception\MyfErrorCode;
 
 /**
  * 页面基类
@@ -83,10 +84,25 @@ abstract class Page
     abstract function execute($vars = []);
 
 
+    /**
+     * 直接输出json格式
+     * @param array $data
+     */
     public function echoJson($data){
-        // 返回JSON数据格式到客户端 包含状态信息
-        header('Content-Type:application/json; charset=utf-8');
-        exit(json_encode($data));
+       Response::echoJson($data);
+    }
+
+    /**
+     * 输出成功记录
+     * @param array|string|bool|int $data
+     */
+    public function successJson($data){
+        $res = [
+            'logid'=>Utils::getLogId(),
+            'status'=>MyfErrorCode::SUCCESS,
+            'data'=>$data,
+        ];
+        $this->echoJson($res);
     }
 
 }

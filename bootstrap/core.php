@@ -6,6 +6,8 @@
  */
 //定义日志
 use Common\Libs\Page;
+use Common\Libs\Response;
+use Common\Libs\Utils;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -13,7 +15,7 @@ use Illuminate\Container\Container;
 use Monolog\Logger;
 
 //判断是否为ajax请求
-define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax'])) ? true : false);
+define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax']) || isset($_SERVER['HTTP_AJAX'])) ? true : false);
 define('LOG_PATH',sprintf('%s/_logs/%s',SYS_PATH,APP_NAME));
 define('LOG_LEVEL',Logger::DEBUG);
 //读取配置文件
@@ -75,17 +77,17 @@ try{
             break;
     }
 }catch (\Exception $e){
-    var_dump($e->getTraceAsString());
     $code = $e->getCode();
     $error = $e->getMessage();
+    $logid = Utils::getLogId();
     if(IS_AJAX){
-        header('Content-type: application/json');
         $result = [
+            'logid'=>$logid,
             'status' => $code,
             'errmsg' => $error,
         ];
-        echo json_encode($result);
+        Response::echoJson($result);
     }else{
-        echo sprintf("出错了！code=【%d】,error=【%s】",$code,$error);
+        echo sprintf("出错了！logid=【%s】,code=【%d】,error=【%s】",$logid,$code,$error);
     }
 }

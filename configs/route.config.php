@@ -5,10 +5,11 @@
  * Date: 2018/5/23
  */
 
+use App\Pages\Auth\RegisterJson;
+
 return [
-    //创建用户
-    ['method' => 'GET', 'route' => '/user/{id:\d+}', 'handler' => App\Pages\User\GetUserInfoPage::class,],
-    ['method' => 'GET', 'route' => '/user/main', 'handler' => App\Pages\User\UserMainPage::class,],
+    //用户注册
+    ['method' => 'POST', 'route' => '/auth/register', 'handler' => RegisterJson::class],
     //获取用户信息
     //['method'=>['GET', 'POST'],'route'=>'/user/{id:\d+}','handler'=>App\Pages\User\GetUserInfo::class],
     //['method'=>['GET', 'POST'],'route'=>'/user/my/{id:\d+}','handler'=>'222'],
