@@ -16,7 +16,7 @@ class Response
      * @param array $data
      */
     public static function echoJson($data){
-        Logger::debug('Page.php response',$data);
+        Logger::debug('Response.php response',$data);
         // 返回JSON数据格式到客户端 包含状态信息
         header('Content-Type:application/json; charset=utf-8');
         exit(json_encode($data));

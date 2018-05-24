@@ -291,3 +291,33 @@ function checkEmail($email){
     }
 }
 
+/**
+ * 读取一个header的值
+ * @param $name
+ * @param null $headers
+ * @return null
+ */
+function getHeader($name, $headers = null) {
+    if (!isset($headers)) {
+        $headers = getAllHeaders();
+    }
+    if (isset($headers[$name])) {
+        return $headers[$name];
+    } else {
+        return null;
+    }
+}
+
+/**
+ * 读取所有的header信息
+ * @return array
+ */
+function getAllHeaders() {
+    $headers = [];
+    foreach ($_SERVER as $name => $value) {
+        if (substr($name, 0, 5) == 'HTTP_') {
+            $headers[str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($name, 5))))] = $value;
+        }
+    }
+    return $headers;
+}

@@ -68,5 +68,26 @@ class Logger
         }
     }
 
+    /**
+     * 获取log需要打印的header信息
+     * @return array
+     */
+    public static function getLogHeaders(){
+        $httpHeaders = getAllHeaders();
+        //需要过滤的header信息
+        $hideKeys = [
+            'connection','content-length','origin','content-type','accept','accept-encoding','accept-language'
+        ];
+        foreach ($hideKeys as $val){
+            unset($httpHeaders[$val]);
+        }
+        $usedHeaders = [
+            'request_method'=>$_SERVER['REQUEST_METHOD'],
+            'client_ip'=>getClientIP(),
+            'request_time'=>$_SERVER['REQUEST_TIME'],
+        ];
+        return array_merge($usedHeaders,$httpHeaders);
+    }
+
 
 }
