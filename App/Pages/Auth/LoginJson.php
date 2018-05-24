@@ -9,6 +9,8 @@ namespace App\Pages\Auth;
 
 
 use App\Pages\BasePage;
+use Common\Service\UserService;
+use Illuminate\Container\Container;
 
 class LoginJson extends BasePage
 {
@@ -20,6 +22,16 @@ class LoginJson extends BasePage
      */
     function execute($vars = [])
     {
+        //注册用户名
+        $username = requestNotEmpty('username');
+        //密码
+        $password = requestNotEmpty('password');
 
+        /**
+         * @var UserService $userService
+         */
+        $userService = Container::getInstance()->make(UserService::class);
+        $res = $userService->userLogin($username,$password);
+        $this->successJson($res);
     }
 }

@@ -25,5 +25,7 @@ class MyfErrorCode
     const AUTH_REGISTER_USERNAME_EXIST = 1001;
     //注册的邮箱账号已经存在
     const AUTH_REGISTER_EMAIL_EXIST = 1002;
+    //用户或密码错误
+    const AUTH_LOGIN_ERROR = 1003;
 
 }

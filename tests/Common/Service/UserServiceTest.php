@@ -46,7 +46,7 @@ class UserServiceTest extends TestCase
         $username = $uuid;
         $password = $uuid;
         //正常情况测试
-        $data = $this->userService->registerUser($mail,$username,$password);
+        $data = $this->userService->createUser($mail,$username,$password);
         $userId = $data['user_id'];
         $user = $this->userModel->findById($userId);
         $this->assertEquals($user['username'],$uuid);

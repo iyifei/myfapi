@@ -32,7 +32,7 @@ class RegisterJson extends BasePage
          * @var UserService $userService
          */
         $userService = Container::getInstance()->make(UserService::class);
-        $res = $userService->registerUser($email,$username,$password);
+        $res = $userService->createUser($email,$username,$password);
         $this->successJson($res);
     }
 }

@@ -31,13 +31,13 @@ class UserService
     }
 
     /**
-     * 注册用户
+     * 创建用户
      * @param string $email 邮箱
      * @param string $username 用户名
      * @param string $password 密码
      * @return array
      */
-    public function registerUser($email,$username,$password){
+    public function createUser($email,$username,$password){
         //邮箱是否注册
         if($this->userModel->isExistEmail($email)){
             MyfException::throwExp(MyfErrorCode::AUTH_REGISTER_EMAIL_EXIST,'email has registered');
@@ -56,12 +56,7 @@ class UserService
         $this->userModel->begin();
         try{
             $userId = $this->userModel->add($data);
-            //获取用户token
-            /**
-             * @var UserTokenService $userTokenService
-             */
-            $userTokenService = $this->container->make(UserTokenService::class);
-            $token = $userTokenService->newTokenByUserId($userId);
+            $token = $this->createNewToken($userId);
             $res = [
                 'user_id'=>$userId,
                 'token'=>$token,
@@ -74,4 +69,39 @@ class UserService
         }
     }
 
+
+    /**
+     * 用户登录
+     * @param string $username 用户名
+     * @param string $password 密码
+     * @return array
+     */
+    public function userLogin($username,$password){
+        $user = $this->userModel->find('username',$username);
+        //用户不存在或密码错误
+        if(empty($user) || encodePassword($password,$user['email'])!=$user['password']){
+            MyfException::throwExp(MyfErrorCode::AUTH_LOGIN_ERROR,'username or password error');
+        }
+        $userId = $user['id'];
+        $token = $this->createNewToken($userId);
+        $res = [
+            'user_id'=>$userId,
+            'token'=>$token,
+        ];
+        return $res;
+    }
+
+    /**
+     * 生成一个用户的新token
+     * @param int $userId 用户id
+     * @return string
+     */
+    private function createNewToken($userId){
+        /**
+         * @var UserTokenService $userTokenService
+         */
+        $userTokenService = $this->container->make(UserTokenService::class);
+        $token = $userTokenService->newTokenByUserId($userId);
+        return $token;
+    }
 }
