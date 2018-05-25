@@ -321,3 +321,40 @@ function getAllHeaders() {
     }
     return $headers;
 }
+
+/**
+ * 获取项目基础绝对URL
+ * @return string
+ */
+function getFullURL() {
+    $pageURL = 'http://';
+    $sitePath = getBasePath();
+    $host = $_SERVER["HTTP_HOST"];
+    $port = $_SERVER["SERVER_PORT"];
+    if ($port != "80") {
+        $pageURL .= $host . $sitePath;
+    } else {
+        $pageURL .= str_replace(":80", "", $host) . $sitePath;
+    }
+    return $pageURL;
+}
+
+/**
+ * 获取项目基础相对URL
+ * @return string
+ */
+function getBasePath() {
+    $sitePath = dirname($_SERVER['SCRIPT_NAME']);
+    if ($sitePath == "/" || $sitePath == "\\") {
+        $sitePath = "";
+    }
+    return $sitePath;
+}
+
+/**
+ * 获取项目相对url地址
+ * @return string
+ */
+function getBaseURL() {
+    return getBasePath();
+}

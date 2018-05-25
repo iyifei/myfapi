@@ -1,6 +1,7 @@
 <?php
 
 use Common\Libs\Task;
+use Common\Model\UserModel;
 
 /**
  * 后台运行脚本
@@ -18,6 +19,8 @@ class TestTask extends Task
      */
     public function execute($vars = [])
     {
-        var_dump($vars);
+        $userModel = new UserModel();
+        $users = $userModel->findAll();
+        var_dump($users);
     }
 }

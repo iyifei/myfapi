@@ -4,6 +4,7 @@
  * Author: 闵益飞
  * Date: 2018/5/23
  */
+error_reporting(E_ALL^E_NOTICE);
 //定义项目名称
 define('APP_NAME','App');
 //定项目路径

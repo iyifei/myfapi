@@ -16,7 +16,7 @@ use function FastRoute\simpleDispatcher;
 use Illuminate\Container\Container;
 use Monolog\Logger;
 
-define('LOG_PATH', sprintf('%s/_logs/%s', SYS_PATH, APP_NAME));
+define('LOG_PATH', sprintf('%s/_runtime/logs/%s', SYS_PATH, APP_NAME));
 define('LOG_LEVEL', Logger::DEBUG);
 //读取配置文件
 $iniFiles = @dir_files(SYS_PATH . '/configs');

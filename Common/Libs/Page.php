@@ -27,12 +27,14 @@ abstract class Page
     protected function initSmarty(){
         $this->smarty = new \Smarty();
         $this->smarty->left_delimiter = '{';
-        $this->smarty->right_delimiter = '{';
+        $this->smarty->right_delimiter = '}';
         //smt缓存路径
-        $smtDir = SYS_PATH.'/_smt/'.APP_NAME.'/tpl_c';
+        $smtDir = SYS_PATH.'/_runtime/smt/'.APP_NAME.'/tpl_c';
         //模板路径
         $tplDir = APP_PATH.'/Views';
         $this->smarty->setTemplateDir($tplDir)->setCompileDir($smtDir);
+        $this->assign('myf_path',getBaseURL());
+        $this->assign('myf_url',getFullURL());
     }
 
     /**
